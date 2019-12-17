@@ -1,0 +1,98 @@
+<scene>
+
+  <image>
+    300 300
+  </image>
+
+  <sampler type="JitteredSampler">
+    <numSamplesU>100</numSamplesU>
+    <numSamplesV>100</numSamplesV>
+  </sampler>
+
+  <!-- <renderer type="BruteForcePathTracer">
+    <depthLimit>5</depthLimit>
+    <backgroundIllumination>1</backgroundIllumination>
+  </renderer> -->
+  <renderer type="DirectIlluminationRenderer">
+  </renderer>
+
+  <camera>
+    <eye>50 50 0 </eye>
+    <target>0 0 0</target>
+    <up>0 1 0</up>
+    <yFOV>70</yFOV>
+  </camera>
+
+  <material name="white" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.75 0.75 0.75</reflectance>
+    </brdf>
+  </material>
+  <material name="red" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.6 0.05 0.05</reflectance>
+    </brdf>
+  </material>
+  <material name="green" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.1 0.45 0.15</reflectance>
+    </brdf>
+  </material>
+  <material name="text" type="Texture">
+    <data>scene/lamp.png</data>
+  </material>
+
+
+
+  <material name="light" type="LambertianEmitter">
+    <brdf type="Lambertian">
+      <reflectance>0.78 0.78 0.78</reflectance>
+    </brdf>
+    <radiance>80 80 80</radiance>
+  </material>
+
+  <surface type="Mesh">
+    <material ref="white"/>
+    <frame>
+      1.2 0 0 0
+      0 1.2 0 58
+      0 0 1.2 0
+    </frame>
+    <data>cube4.msh</data>
+  </surface>
+
+  <surface type="Mesh">
+    <material ref="light" />
+    <frame>
+      3 0 0 0
+      0 3 0 0
+      0 0 3 0
+    </frame>
+    <data>cube2.msh</data>
+  </surface>
+
+  <surface type="Mesh">
+    <material ref="red" />
+    <frame>
+      1 0 0 20
+      0 0 1 0
+      0 -1 0 0
+    </frame>
+    <data>teapot.msh</data>
+  </surface>
+
+  <surface type="Mesh">
+    <material ref="white" />
+    <frame>
+      1 0 0 0
+      0 1 0 -3
+      0 0 1 0
+    </frame>
+    <data>lamp.msh</data>
+  </surface>
+
+  <background type="Uniform">
+    <radiance>0.05 0.05 0.05</radiance>
+  </background>
+
+</scene>

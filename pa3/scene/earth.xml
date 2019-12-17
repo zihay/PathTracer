@@ -1,0 +1,65 @@
+<scene>
+
+  <image>
+    200 200
+  </image>
+
+  <sampler type="JitteredSampler">
+    <numSamplesU>10</numSamplesU>
+    <numSamplesV>10</numSamplesV>
+  </sampler>
+
+  
+  <renderer type="DirectIlluminationRenderer">
+  </renderer>
+
+  <camera>
+    <eye>100 50 250 </eye>
+    <target>50 60 0</target>
+    <up>0 1 0</up>
+    <yFOV>70</yFOV>
+  </camera>
+
+  <material name="white" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.75 0.75 0.75</reflectance>
+    </brdf>
+  </material>
+  <material name="red" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.6 0.05 0.05</reflectance>
+    </brdf>
+  </material>
+  <material name="green" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.1 0.45 0.15</reflectance>
+    </brdf>
+  </material>
+  <material name="text" type="Texture">
+    <data>scene/earth.png</data>
+  </material>
+
+
+
+  <material name="light" type="LambertianEmitter">
+    <brdf type="Lambertian">
+      <reflectance>0.78 0.78 0.78</reflectance>
+    </brdf>
+    <radiance>20 20 20</radiance>
+  </material>
+
+  <surface type="Mesh">
+    <material ref="light" />
+    <data>cube1.msh</data>
+  </surface>
+
+  <surface type="Mesh">
+    <material ref="text" />
+    <data>earth.msh</data>
+  </surface>
+
+  <background type="Uniform">
+    <radiance>0.01 0.01 0.01</radiance>
+  </background>
+
+</scene>
