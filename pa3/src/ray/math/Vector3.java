@@ -142,7 +142,12 @@ public class Vector3 extends Tuple3 {
 		this.y = p1.y - p2.y;
 		this.z = p1.z - p2.z;
 	}
-	
+
+	public void sub(Tuple3 p1, Tuple3 p2) {
+		this.x = p1.x - p2.x;
+		this.y = p1.y - p2.y;
+		this.z = p1.z - p2.z;
+	}
 	/**
 	 * Add a scalar multiple of a Vector3 to this Vector3
 	 * @param scale the scale factor

@@ -1,8 +1,11 @@
 package ray.camera;
 
 import ray.math.Point3;
+import ray.math.Vector2;
 import ray.math.Vector3;
 import ray.misc.Ray;
+
+import java.util.Random;
 
 /**
  * Represents a simple camera. The camera has a position in space, location, and
@@ -48,6 +51,10 @@ public class Camera {
 
   /** Only tangent of 1/2 FOV needed in most calculations, useful to cache it */
   private double tanHalfYFOV;
+
+  Random rand = new Random();
+  double lensRadius = 0.1;
+  double focalDistance = 15;
 
   /**
    * Default constructor, assumes camera uses the default values.
@@ -171,6 +178,27 @@ public class Camera {
 
   }
 
+  Vector2 ConcentricSampleDisk(double u, double v){
+    u = 2 * u - 1;
+    v = 2 * v - 1;
+    double piOver4 = Math.PI/4;
+    double piOver2 = Math.PI/2;
+    if(u == 0 && v == 0)
+      return new Vector2(0,0);
+    double theta, r;
+    if(Math.abs(u) > Math.abs(v)){
+      r = u;
+      theta = piOver4 * (v/u);
+    }
+    else{
+      r = v;
+      theta = piOver2 - piOver4 * (u/v);
+    }
+    Vector2 ret = new Vector2(Math.cos(theta),Math.sin(theta));
+    ret.scale(r);
+    return ret;
+  }
+
   /**
    * Set outRay to be a ray from the camera through the point in the image
    * (xPixel, yPixel). The direction of outRay is normalized after this call.
@@ -180,6 +208,8 @@ public class Camera {
    * @param inV The v coord of the image point
    */
   public void getRay(Ray outRay, double inU, double inV) {
+
+    Vector2 disk_sample = ConcentricSampleDisk(Math.random(),Math.random());
 
     // Remap the UV coordinates
     inU = inU * 2 - 1;
@@ -194,6 +224,24 @@ public class Camera {
     outRay.direction.scaleAdd(-inV * tanHalfYFOV, up); // Move the direction along
     // the up/down axis
     outRay.direction.normalize(); // Normalize
+
+
+    Vector3 front = new Vector3(back);
+    front.scale(-1);
+    double ft = focalDistance/outRay.direction.dot(front);
+    Vector3 o = new Vector3(outRay.origin);
+    Vector3 d = new Vector3(outRay.direction);
+    d.scale(ft);
+    o.add(d);
+//    System.out.println(o.x + "," + o.y + "," + o.z + ";");
+    disk_sample.scale(lensRadius);
+
+    outRay.origin.scaleAdd(disk_sample.x,right);
+    outRay.origin.scaleAdd(disk_sample.y,up);
+//    System.out.println(outRay.origin.x + "," + outRay.origin.y + "," + outRay.origin.z + ";");
+
+    outRay.direction.sub(o,outRay.origin);
+    outRay.direction.normalize();
     outRay.makeOffsetRay();
 
   }

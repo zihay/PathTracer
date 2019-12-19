@@ -11,30 +11,38 @@ public class Specular implements BRDF {
         double F = FrDielectric(CosTheta(reflDir),etaA,etaB);
         rand = incDir.z*incDir.z;
 
-        if(rand < F){
-            incDir.set(new Vector3(-reflDir.x,-reflDir.y,reflDir.z));
-            outBRDFValue.set(F);
-            outBRDFValue.scale(reflectance);
-            outBRDFValue.scale(1/Math.abs(CosTheta(incDir)));
-        }else{
-            boolean entering = CosTheta(reflDir) > 0;
-            double etaI = entering ? etaA : etaB;
-            double etaT = entering ? etaB : etaA;
+        if(rand >p){
+//            lambertian
+            outBRDFValue.set(reflectance);
+            outBRDFValue.scale(1/Math.PI);
+            outBRDFValue.scale(1-p);
+        }
+        else {
 
-            Vector3 n = new Vector3(0,0,1);
-            if(n.dot(reflDir)<0.f)
-                n.scale(-1);
-            if(!Refract(reflDir, n, etaI/etaT, incDir)) {
-                outBRDFValue.set(0);
-                return;
+            if (rand*1/p < F) {
+                incDir.set(new Vector3(-reflDir.x, -reflDir.y, reflDir.z));
+                outBRDFValue.set(F);
+                outBRDFValue.scale(reflectance);
+                outBRDFValue.scale(1 / Math.abs(CosTheta(incDir)));
+                outBRDFValue.scale(p);
+            } else {
+                boolean entering = CosTheta(reflDir) > 0;
+                double etaI = entering ? etaA : etaB;
+                double etaT = entering ? etaB : etaA;
+
+                Vector3 n = new Vector3(0, 0, 1);
+                if (n.dot(reflDir) < 0.f)
+                    n.scale(-1);
+                if (!Refract(reflDir, n, etaI / etaT, incDir)) {
+                    outBRDFValue.set(0);
+                    return;
+                }
+
+                outBRDFValue.set(1-F);
+                outBRDFValue.scale(T);
+                outBRDFValue.scale(1 / Math.abs(CosTheta(incDir)));
+                outBRDFValue.scale(p);
             }
-
-            outBRDFValue.set(F);
-            outBRDFValue.scale(-1);
-            outBRDFValue.add(1);
-            outBRDFValue.scale(T);
-            outBRDFValue.scale(1/Math.abs(CosTheta(incDir)));
-
         }
     }
 
@@ -46,10 +54,15 @@ public class Specular implements BRDF {
     @Override
     public double pdf(Frame3 frame, Vector3 fixedDir, Vector3 dir) {
         double F = FrDielectric(CosTheta(fixedDir),etaA,etaB);
-        if(rand < F){
-            return F;
-        }else{
-            return 1-F;
+        if(rand > p){
+           return 1/Math.PI * (1-p);
+        }
+        else {
+            if (rand * 1/p< F) {
+                return F*p;
+            } else {
+                return (1-F)*p;
+            }
         }
     }
 
@@ -118,4 +131,6 @@ public class Specular implements BRDF {
     private Color reflectance = new Color(.5,.5,.5);
     private Color T = new Color(.5,.5,.5);
     double rand = 0;
+    double p = 0.3;
+
 }

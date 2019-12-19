@@ -1,11 +1,11 @@
 <scene>
   <image>
-    320 180
+    600 600
   </image>
 
   <sampler type="JitteredSampler">
-    <numSamplesU>50</numSamplesU>
-    <numSamplesV>50</numSamplesV>
+    <numSamplesU>100</numSamplesU>
+    <numSamplesV>100</numSamplesV>
   </sampler>
 
   <!--<renderer type="DirectOnlyRenderer">-->
@@ -27,10 +27,10 @@
   </renderer>
 
   <camera>
-    <eye>10 6 8</eye>
-    <target>0 0.3 0</target>
+    <eye>0.021 2 15</eye>
+    <target>0 0 0</target>
     <up>0 1 0</up>
-    <yFOV>15</yFOV>
+    <yFOV>18</yFOV>
   </camera>
 
 <!--  <material name="green" type="Homogeneous">-->
@@ -56,96 +56,148 @@
     </brdf>
   </material>
 
-  <material name="red" type="Homogeneous">
+  <material name="rose" type="Homogeneous">
   <brdf type="Specular">
-    <T>1 1 1</T>
-    <reflectance>0.9 0.9 0.9</reflectance>
+    <T>0.941 0.643 0.58</T>
+    <reflectance>1 0.443 0.38</reflectance>
     <etaA>1</etaA>
     <etaB>1.5</etaB>
   </brdf>
 </material>
 
-<!--  <material name="red" type="Homogeneous">-->
-<!--    <brdf type="SpecularReflection">-->
-<!--      <reflectance>0.5 0.5 0.5</reflectance>-->
-<!--      <etaI>1</etaI>-->
-<!--      <etaT>10</etaT>-->
-<!--    </brdf>-->
-<!--  </material>-->
+  <material name="pink" type="Homogeneous">
+    <brdf type="Specular">
+      <T>0.965 0.773 0.953</T>
+      <reflectance>0.965 0.473 0.953</reflectance>
+      <etaA>1</etaA>
+      <etaB>100</etaB>
+    </brdf>
+  </material>
+
+  <material name="yellow" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>1 1 0.39</reflectance>
+    </brdf>
+  </material>
 
   <material name="blue" type="Homogeneous">
     <brdf type="Lambertian">
       <reflectance>0.2 0.4 0.8</reflectance>
     </brdf>
   </material>
-  <material name="grey" type="Homogeneous">
+
+  <material name="blue" type="Homogeneous">
     <brdf type="Lambertian">
-      <reflectance>0.4 0.4 0.4</reflectance>
+      <reflectance>0.2 0.4 0.8</reflectance>
     </brdf>
   </material>
 
+  <material name="grey" type="Homogeneous">
+    <brdf type="Lambertian">
+      <reflectance>0.5 0.5 0.5</reflectance>
+    </brdf>
+  </material>
+
+<!--  3-->
   <surface type="Sphere">
-    <material ref="red" />
+    <material ref="rose" />
     <radius>0.8</radius>
-    <center>0 0.8 1</center>
+    <center>0 0 0</center>
   </surface>
+
+<!--  6-->
   <surface type="Sphere">
     <material ref="green" />
     <radius>0.8</radius>
-    <center>0.8660 0.8 -0.5</center>
+    <center>1.1 0 -3.2</center>
   </surface>
+
+  <!--  4-->
   <surface type="Sphere">
-    <material ref="blue" />
-    <radius>0.8</radius>
-    <center>-0.8660 0.8 -0.5</center>
+    <material ref="pink" />
+    <radius>1.25</radius>
+    <center>2.35 0.46 -0.55</center>
   </surface>
+
+  <!-- 2-->
+  <surface type="Sphere">
+    <material ref="rose" />
+    <radius>0.8</radius>
+    <center>2.26 0 1.8</center>
+  </surface>
+
+  <!-- 0-->
+  <surface type="Sphere">
+    <material ref="yellow" />
+    <radius>0.3</radius>
+    <center>-1.36 -0.44 1.5</center>
+  </surface>
+
+  <!-- 5-->
+  <surface type="Sphere">
+    <material ref="pink" />
+    <radius>0.5</radius>
+    <center>-2.3 -0.26 2.2</center>
+  </surface>
+
+  <!-- 7-->
+  <surface type="Sphere">
+    <material ref="pink" />
+    <radius>0.9</radius>
+    <center>-2.85 0.12 0</center>
+  </surface>
+
 
 <!--  <surface type="Mesh">-->
 <!--    <material ref="red" />-->
 <!--    <frame>-->
 <!--      1 0 0 20-->
 <!--      0 0 1 0-->
-<!--      0 -1 0 0-->
+<!--      0 1 0 0-->
 <!--    </frame>-->
 <!--    <data>teapot.msh</data>-->
 <!--  </surface>-->
 
   <surface type="Mesh">
     <material ref="text"/>
-<!--    <frame>-->
-<!--      100 0 0 0-->
-<!--      0 100 0 -1-->
-<!--      0 0 100 0-->
-<!--    </frame>-->
+    <frame>
+      1 0 0 -1.5
+      0 0 1 -0.25
+      0 -1 0 -1.7
+    </frame>
     <data>cube.msh</data>
   </surface>
 
   <surface type="Triangle">
     <material ref="grey" />
-    <v0>0 0 50</v0>
-    <v1>43.30 0 -25</v1>
-    <v2>-43.30 0 -25</v2>
+    <v0>0 -0.8 50</v0>
+    <v1>43.30 -0.8 -25</v1>
+    <v2>-43.30 -0.8 -25</v2>
   </surface>
+
+
+
+
 
   <surface type="Triangle">
     <material type="LambertianEmitter">
       <radiance>5 5 5</radiance>
     </material>
-    <v0>0 8 5</v0>
-    <v1>-4.330 8 -2.5</v1>
-    <v2>4.330 8 -2.5</v2>
+    <v0>-4 8 5</v0>
+    <v1>-8.330 8 -2.5</v1>
+    <v2>0.330 8 -2.5</v2>
   </surface>
 
   <surface type="Sphere">
     <material type="LambertianEmitter">
-      <radiance>20 20 20</radiance>
+      <radiance>30 30 30</radiance>
     </material>
-    <center>8 5 0</center>
+    <center>-4 5 0</center>
     <radius>1</radius>
   </surface>
 
   <background type="Uniform">
-    <radiance>0.7 0.7 0.7</radiance>
+    <radiance>1 1 1</radiance>
   </background>
 <!--  <background type="Cubemap">-->
 <!--    <filename>scene/stpeters_cross.pfm</filename>-->
