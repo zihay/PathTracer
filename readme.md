@@ -1,8 +1,8 @@
-# Programming Assignment 2
+# Monte-Carlo Path Tracer
 
 ## Usage:
 
-Use Ant to build pa3.
+Use Ant to build the source.
 
 run code:
 ```
@@ -15,9 +15,15 @@ java -cp carbine.jar ray.ParaRayTracer scene/earth.xml
 java -cp carbine.jar ray.ParaRayTracer scene/teapot.xml
 ```
 
-# Report
+<div align="center">
+<img src="SPHERES.XML.jpeg" alt="drawing" width="300" />
+</div>
 
-## Implementation
+
+<div align="center">
+<img src="cbox-RR.xml.png" alt="drawing" width="300" />
+</div>
+
 
 ### DirectIlluminationRenderer:
 
@@ -54,7 +60,7 @@ java -cp carbine.jar ray.ParaRayTracer scene/teapot.xml
 <img src="earth.xml.png" alt="drawing" width="300" />
 </div>
 
-### Creative Scene:
+<!-- ### Creative Scene: -->
 300x300 resolution using 100x100 samples:
 <div align="center">
 <img src="earth.xml.png" alt="drawing" width="300" />
@@ -64,4 +70,4 @@ java -cp carbine.jar ray.ParaRayTracer scene/teapot.xml
 <div align="center">
 <img src="teapot.xml.png" alt="drawing" width="300" />
 </div>
-Cause the light source is very small, so the image is very noisy.
+<!-- Cause the light source is very small, so the image is very noisy. -->
